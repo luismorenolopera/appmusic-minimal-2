@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 from . import views
 
-urlpatterns = patterns('myproject.myapp.views',
-                       url(r'^list/$', 'list', name='list'),
-                       url(r'^delete/(?P<songId>[0-9]+)/$',
-                           views.delete, name='delete')
-                       )
+urlpatterns = [
+    url(r'^list/$', views.list, name='list'),
+    url(r'^delete/(?P<songId>[0-9]+)/$',
+        views.delete, name='delete')
+]
