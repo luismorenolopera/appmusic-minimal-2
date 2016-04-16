@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      {% load staticfiles %}
+      <meta charset="utf-8">
+      <title>Minimal Django File Upload Example</title>
+    </head>
+
+    <body>
+        <!-- List of uploaded documents -->
+      {% if documents %}
+        <ul>
+          {% for document in documents %}
+            <li>
+              <audio controls>
+                <source src="{{ document.docfile.url }}" type="audio/mpeg">
+              </audio>
+              <a href="{{request.get_host}}/myapp/delete/{{document.id}}">Eliminar</a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No documents.</p>
+      {% endif %}
+
+      <!-- Upload form. Note enctype attribute! -->
+      <form action="{{request.get_host}}/myapp/list/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        {{ form.docfile.label_tag }} {{ form.docfile.help_text }}
+
+        <p>
+          {{ form.docfile.errors }}
+        </p>
+          {{ form.docfile }}
+
+        <input type="submit" value="Upload"/>
+      </form>
+      <script type="text/javascript" src="{% static 'myapp/js/delete.js' %}"></script>
+    </body>
+</html>
